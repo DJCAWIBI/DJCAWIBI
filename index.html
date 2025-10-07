@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JackiGO - Transporte Seguro</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+    <!-- Pantalla de carga inicial -->
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-content">
+            <h1 class="logo">JackiGO</h1>
+            <div class="loading-spinner"></div>
+            <p>Cargando...</p>
+        </div>
+    </div>
+
+    <!-- Pantalla de registro (Imagen 2) -->
+    <div id="registerScreen" class="auth-screen hidden">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h1>Regístrate ahora y consigue un descuento de bienvenida!</h1>
+                <p>Para nuevos registros de cuenta personal.</p>
+            </div>
+            
+            <div class="auth-options">
+                <button class="auth-btn google-btn">
+                    <span class="btn-icon">G</span>
+                    Continuar con Google
+                </button>
+                
+                <button class="auth-btn phone-btn" id="phoneAuthBtn">
+                    <span class="btn-icon">📱</span>
+                    Entrar con número de celular
+                </button>
+                
+                <button class="auth-btn email-btn">
+                    <span class="btn-icon">✉️</span>
+                    Entrar con mi email de empresa
+                </button>
+            </div>
+            
+            <div class="auth-footer">
+                <p>Al registrarte, aceptas nuestros <a href="#">Términos de servicio</a> y <a href="#">Política de privacidad</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla de ingreso de celular (Imagen 3) -->
+    <div id="phoneScreen" class="auth-screen hidden">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h1>¡Muévete por la ciudad de forma segura y confiable!</h1>
+                <p>Estás más cerca de tu destino con JackiGO.</p>
+            </div>
+            
+            <div class="phone-input-container">
+                <div class="country-selector" id="countrySelector">
+                    <span class="country-flag">🇵🇪</span>
+                    <span class="country-code">+51</span>
+                    <span class="dropdown-arrow">▼</span>
+                </div>
+                <input type="tel" class="phone-input" placeholder="Celular" id="phoneInput">
+            </div>
+            
+            <div class="auth-notice">
+                <p>¡Regístrate y disfruta de un descuento de bienvenida! Solo para nuevos usuarios.</p>
+                <p>Al continuar, aceptas la Política de privacidad y los Términos de uso de JackiGO.</p>
+            </div>
+            
+            <button class="auth-continue-btn" id="continueToPassword">Siguiente</button>
+        </div>
+    </div>
+
+    <!-- Selector de país (Imagen 4) -->
+    <div id="countryScreen" class="auth-screen hidden">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h1>Selecciona un país</h1>
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Buscar un país" id="countrySearch">
+                </div>
+            </div>
+            
+            <div class="country-list" id="countryList">
+                <!-- Los países se cargarán dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla de contraseña (Imagen 5) -->
+    <div id="passwordScreen" class="auth-screen hidden">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h1>Crea una contraseña</h1>
+                <p>Necesitarás 8 o más caracteres.</p>
+            </div>
+            
+            <div class="input-group">
+                <input type="text" class="auth-input" placeholder="Nombre completo" id="fullNameInput">
+            </div>
+            
+            <div class="input-group">
+                <input type="password" class="auth-input" placeholder="Contraseña" id="passwordInput">
+            </div>
+            
+            <button class="auth-continue-btn" id="completeRegistration">Continuar</button>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

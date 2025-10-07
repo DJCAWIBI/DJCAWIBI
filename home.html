@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JackiGO - Inicio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/map.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-content">
+            <div class="location-display" id="currentLocation">
+                <span class="location-icon">📍</span>
+                <span class="location-text">Bienvenido a JackiGO</span>
+            </div>
+            <button class="menu-btn" id="menuBtn">☰</button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div id="mainMap"></div>
+        
+        <div class="search-panel">
+            <div class="search-input-container">
+                <input type="text" class="search-input" placeholder="¿A dónde quieres ir?" id="destinationInput">
+                <button class="search-btn" id="searchBtn">🔍</button>
+            </div>
+        </div>
+
+        <div class="service-selector-panel">
+            <h3>RECOMENDADO</h3>
+            
+            <div class="service-options">
+                <div class="service-option active" data-service="economy">
+                    <div class="service-header">
+                        <h4>JackiGO Estándar</h4>
+                        <div class="service-price">S/10.50</div>
+                    </div>
+                </div>
+                
+                <div class="service-option" data-service="premium">
+                    <div class="service-header">
+                        <h4>Al Toque</h4>
+                        <div class="service-price">S/17.20</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="payment-method">
+                <span class="payment-label">Efectivo</span>
+                <span class="payment-check">✔</span>
+            </div>
+            
+            <button class="order-btn" id="orderNowBtn">Pedir ahora</button>
+        </div>
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="#home" class="nav-tab active">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Inicio</span>
+        </a>
+        <a href="#rides" class="nav-tab">
+            <span class="nav-icon">🚗</span>
+            <span class="nav-label">Viajes</span>
+        </a>
+        <a href="#notifications" class="nav-tab">
+            <span class="nav-icon">🔔</span>
+            <span class="nav-label">Alertas</span>
+        </a>
+        <a href="#profile" class="nav-tab">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Perfil</span>
+        </a>
+    </nav>
+
+    <div id="searchModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button id="closeSearchModal" class="close-modal-btn">✖</button> <h3>¿A dónde quieres ir?</h3>
+            </div>
+            
+            <div class="location-inputs">
+                <input type="text" id="originInput" class="app-input" placeholder="Punto de Recogida" value="Ubicación Actual"> <input type="text" id="modalDestinationInput" class="app-input" placeholder="Destino"> </div>
+
+            <button id="useCurrentLocation" class="btn-secondary small-btn">Usar Ubicación Actual</button> <button id="changeZoneBtn" class="btn-secondary small-btn">Cambiar Zona</button> <div id="searchResults" class="search-results">
+                </div>
+
+            <div id="searchMap" style="height: 200px; margin-top: 10px;"></div>
+
+            <button class="btn-primary full-width" id="confirmLocations">Confirmar Viaje</button> </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
