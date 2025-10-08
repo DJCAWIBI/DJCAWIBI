@@ -3,117 +3,360 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JackiGO - Transporte Seguro</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/auth.css">
+    <title>JackiGO - Tu viaje en la Amazonía</title>
+    <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
-    <!-- Pantalla de carga inicial -->
-    <div id="splashScreen" class="splash-screen">
-        <div class="splash-content">
-            <h1 class="logo">JackiGO</h1>
-            <div class="loading-spinner"></div>
-            <p>Cargando...</p>
-        </div>
+    <div id="splash-screen">
+        JackiGO
     </div>
 
-    <!-- Pantalla de registro (Imagen 2) -->
-    <div id="registerScreen" class="auth-screen hidden">
-        <div class="auth-container">
-            <div class="auth-header">
-                <h1>Regístrate ahora y consigue un descuento de bienvenida!</h1>
-                <p>Para nuevos registros de cuenta personal.</p>
+    <div id="map"></div>
+    
+    <div class="app-overlay">
+        <header class="app-header">
+            <div class="header-content">
+                <h1 id="view-title">Bienvenido a JackiGO</h1>
+                <p id="view-subtitle">La opción de transporte segura de Iquitos.</p>
             </div>
-            
-            <div class="auth-options">
-                <button class="auth-btn google-btn">
-                    <span class="btn-icon">G</span>
-                    Continuar con Google
-                </button>
-                
-                <button class="auth-btn phone-btn" id="phoneAuthBtn">
-                    <span class="btn-icon">📱</span>
-                    Entrar con número de celular
-                </button>
-                
-                <button class="auth-btn email-btn">
-                    <span class="btn-icon">✉️</span>
-                    Entrar con mi email de empresa
-                </button>
-            </div>
-            
-            <div class="auth-footer">
-                <p>Al registrarte, aceptas nuestros <a href="#">Términos de servicio</a> y <a href="#">Política de privacidad</a></p>
-            </div>
-        </div>
-    </div>
+        </header>
 
-    <!-- Pantalla de ingreso de celular (Imagen 3) -->
-    <div id="phoneScreen" class="auth-screen hidden">
-        <div class="auth-container">
-            <div class="auth-header">
-                <h1>¡Muévete por la ciudad de forma segura y confiable!</h1>
-                <p>Estás más cerca de tu destino con JackiGO.</p>
-            </div>
+        <main class="app-main">
             
-            <div class="phone-input-container">
-                <div class="country-selector" id="countrySelector">
-                    <span class="country-flag">🇵🇪</span>
-                    <span class="country-code">+51</span>
-                    <span class="dropdown-arrow">▼</span>
-                </div>
-                <input type="tel" class="phone-input" placeholder="Celular" id="phoneInput">
-            </div>
-            
-            <div class="auth-notice">
-                <p>¡Regístrate y disfruta de un descuento de bienvenida! Solo para nuevos usuarios.</p>
-                <p>Al continuar, aceptas la Política de privacidad y los Términos de uso de JackiGO.</p>
-            </div>
-            
-            <button class="auth-continue-btn" id="continueToPassword">Siguiente</button>
-        </div>
-    </div>
+            <div id="login-view" class="view active">
+                <div class="container">
+                    <div class="welcome-message">
+                        <h2>¡Viaja con JackiGO! 🛵</h2>
+                        <p>Ingresa tus datos para empezar tu viaje.</p>
+                    </div>
 
-    <!-- Selector de país (Imagen 4) -->
-    <div id="countryScreen" class="auth-screen hidden">
-        <div class="auth-container">
-            <div class="auth-header">
-                <h1>Selecciona un país</h1>
-                <div class="search-container">
-                    <input type="text" class="search-input" placeholder="Buscar un país" id="countrySearch">
+                    <div class="input-group">
+                        <label for="login-phone" class="input-label">Celular</label>
+                        <input type="tel" id="login-phone" class="input-field" placeholder="Tu número de celular">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="login-password" class="input-label">Contraseña</label>
+                        <input type="password" id="login-password" class="input-field" placeholder="Ingresa tu contraseña">
+                    </div>
+
+                    <button class="btn-primary" onclick="handleLogin()">Ingresar</button>
+                    <button class="btn-secondary" onclick="nextView('register-view')">Regístrate</button>
                 </div>
             </div>
-            
-            <div class="country-list" id="countryList">
-                <!-- Los países se cargarán dinámicamente -->
-            </div>
-        </div>
-    </div>
 
-    <!-- Pantalla de contraseña (Imagen 5) -->
-    <div id="passwordScreen" class="auth-screen hidden">
-        <div class="auth-container">
-            <div class="auth-header">
-                <h1>Crea una contraseña</h1>
-                <p>Necesitarás 8 o más caracteres.</p>
+            <div id="register-view" class="view">
+                <div class="container">
+                    <div class="welcome-message">
+                        <h2>¡Únete a la JackiGO Familia!</h2>
+                        <p>Ingresa tu número para crear tu cuenta.</p>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">País / Prefijo</label>
+                        <select class="input-field">
+                            <option>+51 Perú</option>
+                            <option>+1 USA</option>
+                            <option>+34 España</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="input-label">Celular</label>
+                        <input type="tel" class="input-field" value="9XX XXX XXX" placeholder="Número de celular">
+                    </div>
+                    
+                    <div class="promo-banner">
+                        <span class="promo-icon">🎁</span>
+                        <span>¡Regístrate y recibe un viaje gratis!</span>
+                    </div>
+                    
+                    <div class="terms">
+                        Al continuar, aceptas la <a href="#">Política de privacidad</a> y los <a href="#">Términos de uso</a> de JackiGO.
+                    </div>
+                    
+                    <button class="btn-primary" onclick="nextView('password-view')">Siguiente</button>
+                </div>
+            </div>
+
+            <div id="password-view" class="view">
+                <div class="container">
+                    <div class="input-group">
+                        <label for="password-input" class="input-label">Crea tu Contraseña</label>
+                        <input type="password" id="password-input" class="input-field" placeholder="Ingresa tu contraseña">
+                        <div class="password-strength">
+                            <div class="strength-bar"></div>
+                            <div class="strength-text">Seguridad de la contraseña</div>
+                        </div>
+                    </div>
+                    <button class="btn-primary" onclick="handleRegistration()">Finalizar Registro</button>
+                </div>
+            </div>
+
+            <div id="home-view" class="view">
+                <div class="home-map-area">
+                    <span class="home-map-pin">📍</span>
+                </div>
+                
+                <button class="fab-start-trip" onclick="nextView('location-selection-view')">
+                    ¿A dónde quieres ir? →
+                </button>
+            </div>
+
+            <div id="location-selection-view" class="location-picker-view">
+                <div class="picker-header">
+                    <div class="back-button" onclick="previousView()">←</div>
+                    <h3>Selecciona tu Viaje</h3>
+                </div>
+                
+                <div class="picker-main">
+                    <div class="location-input-group">
+                        <div class="location-input-row">
+                            <div class="input-marker">A</div>
+                            <div class="location-input-content">
+                                <span class="input-label">Recogida:</span>
+                                <input type="text" id="origin-input" class="location-input-field" value="Villarreal, Iquitos" readonly placeholder="Tu ubicación">
+                                <button class="select-on-map-btn" onclick="openMapSelection('origin')">Elegir en Mapa</button>
+                            </div>
+                        </div>
+                        
+                        <div class="location-input-row">
+                            <div class="input-marker">B</div>
+                            <div class="location-input-content">
+                                <span class="input-label">Destino:</span>
+                                <input type="text" id="destination-input" class="location-input-field" placeholder="¿A dónde vas?" readonly>
+                                <button class="select-on-map-btn" onclick="openMapSelection('destination')">Elegir en Mapa</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="time-selector">
+                        <div class="time-option active" data-time="now">
+                            <span class="time-icon">🛵</span>
+                            <span>Ahora</span>
+                        </div>
+                        <div class="time-option" data-time="reserve">
+                            <span class="time-icon">📅</span>
+                            <span>Reservar</span>
+                        </div>
+                    </div>
+                    
+                    <div id="reserve-date-area" class="date-selector" style="display:none;">
+                        <h4>Selecciona la Fecha</h4>
+                        <p id="selected-date-text">Hoy</p>
+                        <input type="date" id="date-input" style="display:none;" onchange="updateSelectedDate(this.value)">
+                        <button class="btn-secondary" onclick="document.getElementById('date-input').click()">Elegir Fecha</button>
+                    </div>
+
+
+                    <div class="suggested-destinations">
+                        <h3>Destinos Populares en Iquitos</h3>
+                        <div class="destination-list">
+                            <div class="destination-item" onclick="selectDestination('Plaza de Armas de Iquitos')">
+                                <span class="dest-icon">🏛️</span>
+                                <span>Plaza de Armas</span>
+                            </div>
+                            <div class="destination-item" onclick="selectDestination('Malecón Tarapacá')">
+                                <span class="dest-icon">🌊</span>
+                                <span>Malecón Tarapacá</span>
+                            </div>
+                            <div class="destination-item" onclick="selectDestination('Casa de Fierro')">
+                                <span class="dest-icon">🏠</span>
+                                <span>Casa de Fierro</span>
+                            </div>
+                            <div class="destination-item" onclick="selectDestination('Mercado Belén')">
+                                <span class="dest-icon">🛒</span>
+                                <span>Mercado Belén</span>
+                            </div>
+                            <div class="destination-item" onclick="selectDestination('Aeropuerto Internacional de Iquitos')">
+                                <span class="dest-icon">✈️</span>
+                                <span>Aeropuerto</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="nextView('vehicle-selection-view')">Ver Motocarros y Carros</button>
+                </div>
             </div>
             
-            <div class="input-group">
-                <input type="text" class="auth-input" placeholder="Nombre completo" id="fullNameInput">
+            <div id="vehicle-selection-view" class="view">
+                <div class="container">
+                    <div class="trip-summary">
+                        <div class="route">
+                            <div class="route-point" id="summary-origin">Recogida</div>
+                            <div class="route-divider">→</div>
+                            <div class="route-point" id="summary-destination">Destino</div>
+                        </div>
+                        <div class="trip-time" id="summary-time">Ahora</div>
+                    </div>
+
+                    <div class="flash-sale">
+                        <span class="flash-icon">⚡</span>
+                        <span>¡Precios JackiGO! Descuento Flash termina en <span id="countdown">04:47</span></span>
+                    </div>
+
+                    <div class="vehicle-options">
+                        <div class="vehicle-option recommended" data-vehicle="motocarro">
+                            <div class="vehicle-info">
+                                <div class="vehicle-name">Motocarro Rápido 🛵</div>
+                                <div class="vehicle-details">
+                                    <span class="vehicle-time">4 min</span>
+                                    <span class="vehicle-seats">3 asientos</span>
+                                </div>
+                            </div>
+                            <div class="vehicle-price">
+                                <div class="current-price">S/ 6.50</div>
+                                <div class="original-price">S/ 7.32</div>
+                            </div>
+                        </div>
+
+                        <div class="vehicle-option" data-vehicle="carro">
+                            <div class="vehicle-info">
+                                <div class="vehicle-name">Carro Cómodo 🚗</div>
+                                <div class="vehicle-details">
+                                    <span class="vehicle-time">9 min</span>
+                                    <span class="vehicle-seats">4 asientos</span>
+                                </div>
+                            </div>
+                            <div class="vehicle-price">
+                                <div class="current-price">S/ 15.00</div>
+                                <div class="original-price">S/ 16.02</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="nextView('payment-view')">Continuar con Motocarro</button>
+                </div>
+            </div>
+
+            <div id="payment-view" class="view">
+                <div class="container">
+                    <h3>Método de pago</h3>
+                    
+                    <div class="payment-options">
+                        <div class="payment-option active">
+                            <div class="payment-icon">💵</div>
+                            <div class="payment-info">
+                                <div class="payment-name">Efectivo</div>
+                                <div class="payment-desc">Paga al conductor (Motocarro)</div>
+                            </div>
+                            <div class="payment-check">✓</div>
+                        </div>
+                        
+                        <div class="payment-option">
+                            <div class="payment-icon">💳</div>
+                            <div class="payment-info">
+                                <div class="payment-name">Tarjeta de débito/crédito</div>
+                                <div class="payment-desc">Vincula tu tarjeta</div>
+                            </div>
+                            <div class="payment-check"></div>
+                        </div>
+                    </div>
+
+                    <div class="add-payment-method">
+                        <div class="add-icon">+</div>
+                        <div>Añadir método de pago</div>
+                    </div>
+
+                    <button class="btn-primary" onclick="simulateLoading(() => nextView('confirmation-view'))">Confirmar Viaje (S/ 6.50)</button>
+                </div>
+            </div>
+
+            <div id="confirmation-view" class="view">
+                <div class="container">
+                    <div class="confirmation-header">
+                        <div class="confirmation-icon">✅</div>
+                        <h3>¡JackiGO Aceptado!</h3>
+                        <p id="confirmation-subtitle">Tu conductor está en camino</p>
+                    </div>
+
+                    <div class="driver-info">
+                        <div class="driver-avatar">J</div>
+                        <div class="driver-details">
+                            <div class="driver-name">Juan Pérez (Motocarrista)</div>
+                            <div class="driver-rating">
+                                <span class="stars">★★★★★</span>
+                                <span>4.9</span>
+                            </div>
+                        </div>
+                        <div class="vehicle-plate">L-1234-A</div>
+                    </div>
+
+                    <div class="trip-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Vehículo</span>
+                            <span class="detail-value" id="final-vehicle-type">Motocarro - Rojo</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Tiempo estimado llegada</span>
+                            <span class="detail-value" id="eta-time">4 min</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Precio final</span>
+                            <span class="detail-value" id="final-price">S/ 6.50</span>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" id="trip-action-btn" onclick="simulateTripPhase()">Cancelar Viaje</button>
+                    <div class="nav-progress" style="margin-top:20px;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="trip-progress-fill" style="width: 30%;"></div>
+                        </div>
+                    </div>
+                    <p id="trip-status" style="text-align:center; font-size:14px; margin-top: 8px;">Buscando conductor...</p>
+                </div>
             </div>
             
-            <div class="input-group">
-                <input type="password" class="auth-input" placeholder="Contraseña" id="passwordInput">
+            <div id="rating-view" class="view">
+                <div class="container">
+                    <div class="confirmation-header">
+                        <div class="confirmation-icon">⭐</div>
+                        <h3>¡Viaje Exitoso!</h3>
+                        <p>Gracias por viajar con JackiGO. Por favor, califica a Juan.</p>
+                    </div>
+                    
+                    <div style="text-align:center; margin-bottom: 20px; font-size: 30px;">
+                        <span class="stars" style="cursor:pointer;" onclick="rateDriver(1)">★</span>
+                        <span class="stars" style="cursor:pointer;" onclick="rateDriver(2)">★</span>
+                        <span class="stars" style="cursor:pointer;" onclick="rateDriver(3)">★</span>
+                        <span class="stars" style="cursor:pointer;" onclick="rateDriver(4)">★</span>
+                        <span class="stars" style="cursor:pointer;" onclick="rateDriver(5)">★</span>
+                    </div>
+                    
+                    <textarea class="input-field" rows="3" placeholder="Comentarios (opcional)"></textarea>
+                    
+                    <button class="btn-primary" onclick="completeTrip()">Enviar Calificación</button>
+                </div>
             </div>
-            
-            <button class="auth-continue-btn" id="completeRegistration">Continuar</button>
-        </div>
+
+
+        </main>
+
+        <nav class="bottom-nav" id="main-nav">
+            <button class="nav-button" onclick="previousView()">
+                <span>←</span>
+                <span>Atrás</span>
+            </button>
+            <div class="nav-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+            <button class="nav-button" onclick="nextView()">
+                <span>Siguiente</span>
+                <span>→</span>
+            </button>
+        </nav>
+        
+        <nav class="bottom-nav" id="map-selection-nav" style="display: none;">
+            <button class="btn-primary" style="margin: 0;" onclick="confirmMapSelection()">
+                <span>Confirmar Ubicación</span>
+            </button>
+        </nav>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
